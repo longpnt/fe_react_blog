@@ -6,6 +6,8 @@ ReactDOM.render(
   <React.StrictMode>
     <ContextProvider>
       <App />
+      <PORT />
+      <HOST />
     </ContextProvider>
   </React.StrictMode>,
   document.getElementById("root"));
