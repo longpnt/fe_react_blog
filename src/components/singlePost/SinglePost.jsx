@@ -5,7 +5,7 @@ import { useEffect, useState, useContext } from "react";
 import { Context } from "../../context/Context";
 
 export default function SinglePost() {
-  const PF = "http://localhost:5000/images/";
+  const PF = process.env.URL_IMAGES;
 
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -17,7 +17,7 @@ export default function SinglePost() {
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get("/posts/" + path);
+      const res = await axios.get(process.env.URL_POSTS + path);
       setPost(res.data);
       // setTitle(res.data.title);
       // setDesc(res.data.desc);
@@ -27,15 +27,15 @@ export default function SinglePost() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${post._id}`, {
+      await axios.delete(process.env.URL_POSTS`${post._id}`, {
         data: { username: user.username },
       });
-      window.location.replace("/");
+      window.location.replace(process.env.URL_POSTS);
     } catch (err) {}
   };
   const handleUpdate = async () => {
     try {
-      await axios.put(`/posts/${post._id}`, {
+      await axios.put(process.env.URL_POSTS`${post._id}`, {
         username: user.username,
         title,
         desc,
@@ -77,7 +77,7 @@ export default function SinglePost() {
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={`/?user=${post.username}`} className="link">
+            <Link to={process.env.URL_USER =`${post.username}`} className="link">
               <b>{post.username}</b>
             </Link>
           </span>

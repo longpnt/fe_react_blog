@@ -12,12 +12,12 @@ export default function Register() {
     try {
       e.preventDefault();
       setError(false);
-      const res = await axios.post("/auth/register", {
+      const res = await axios.post(process.env.URL_REGISTER, {
         username,
         email,
         password,
       });
-      res.data&& window.location.replace("/login");
+      res.data&& window.location.replace(process.env.URL_LOGIN);
     } catch (err) {
       setError(true)
     }
