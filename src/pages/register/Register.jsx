@@ -2,6 +2,8 @@ import "./register.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+const { REACT_APP_API_URL } = process.env
+
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -12,12 +14,12 @@ export default function Register() {
     try {
       e.preventDefault();
       setError(false);
-      const res = await axios.post(process.env.URL_REGISTER, {
+      const res = await axios.post(`${REACT_APP_API_URL}/auth/register`, {
         username,
         email,
         password,
       });
-      res.data&& window.location.replace(process.env.URL_LOGIN);
+      res.data&& window.location.replace(`${REACT_APP_API_URL}/auth/login`);
     } catch (err) {
       setError(true)
     }

@@ -3,6 +3,8 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { Context } from "../../context/Context";
 import { useContext, useState } from "react";
 import axios from "axios";
+const { REACT_APP_API_URL } = process.env
+
 export default function Settings() {
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
@@ -11,7 +13,7 @@ export default function Settings() {
   const [success, setSuccess] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  const PF = process.env.URL_IMAGES;
+  const PF=`${REACT_APP_API_URL}/images`;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,11 +31,11 @@ export default function Settings() {
       data.append("file", file);
       // updateUser.profilePic = filename;
       try {
-        await axios.post(process.env.URL_UPLOAD, data);
+        await axios.post(`${REACT_APP_API_URL}/upload`, data);
       } catch (err) {}
     }
     try {
-      const res = await axios.put(process.env.URL_USER + user._id, updateUser);
+      const res = await axios.put(`${REACT_APP_API_URL}/user` + user._id, updateUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {

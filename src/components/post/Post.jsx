@@ -2,7 +2,10 @@ import "./post.css";
 import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
-  const PF=process.env.URL_IMAGES
+  const { REACT_APP_API_URL } = process.env
+  console.log(REACT_APP_API_URL);
+
+  const PF=`${REACT_APP_API_URL}/images`;
   return (
     <div className="post">
       {post.photo && (
@@ -10,8 +13,8 @@ export default function Post({ post }) {
       )}
       <div className="postInfo">
         <div className="postCats">
-          {post.categories.map((c) => (
-            <span className="postCat">{c.name}</span>
+          {post.categories.map((c,index) => (
+            <span key={index} className="postCat">{c.name}</span>
           ))}
         </div>
         <Link to={`/post/${post._id}`} className="link">

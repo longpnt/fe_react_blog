@@ -2,6 +2,8 @@ import "./write.css";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
+const { REACT_APP_API_URL } = process.env
+
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -21,12 +23,12 @@ export default function Write() {
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post(process.env.URL_UPLOAD, data);
+        await axios.post(`${REACT_APP_API_URL}/upload`, data);
       } catch (err) {}
     }
     try {
-      const res =await axios.post(process.env.URL_POSTS, newPost);
-      window.location.replace(process.env.URL_POST + res.data._id);
+      const res =await axios.post(`${REACT_APP_API_URL}/posts`, newPost);
+      window.location.replace(`${REACT_APP_API_URL}/post` + res.data._id);
     } catch (err) {}
   };
   return (

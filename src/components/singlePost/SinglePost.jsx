@@ -3,9 +3,9 @@ import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { Context } from "../../context/Context";
-
+const { REACT_APP_API_URL } = process.env
 export default function SinglePost() {
-  const PF = process.env.URL_IMAGES;
+  const PF = `${REACT_APP_API_URL}/images`;
 
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -17,31 +17,31 @@ export default function SinglePost() {
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get(process.env.URL_POSTS + path);
+      const res = await axios.get(`${REACT_APP_API_URL}/posts` + path);
       setPost(res.data);
-      // setTitle(res.data.title);
-      // setDesc(res.data.desc);
+      setTitle(res.data.title);
+      setDesc(res.data.desc);
     };
     getPost();
   });
 
   const handleDelete = async () => {
     try {
-      await axios.delete(process.env.URL_POSTS`${post._id}`, {
+      await axios.delete(`${REACT_APP_API_URL}/${post._id}`, {
         data: { username: user.username },
       });
-      window.location.replace(process.env.URL_POSTS);
-    } catch (err) {}
+      window.location.replace(`${REACT_APP_API_URL}/posts`);
+    } catch (err) { }
   };
   const handleUpdate = async () => {
     try {
-      await axios.put(process.env.URL_POSTS`${post._id}`, {
+      await axios.put(`${REACT_APP_API_URL}/posts/${post._id}`, {
         username: user.username,
         title,
         desc,
       });
       setUpdateMode(false);
-    } catch (err) {}
+    } catch (err) { }
   };
   return (
     <div className="singlepost">
@@ -77,7 +77,7 @@ export default function SinglePost() {
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={process.env.URL_USER =`${post.username}`} className="link">
+            <Link to={`${REACT_APP_API_URL}/?users = ${post.username}`} className="link">`$
               <b>{post.username}</b>
             </Link>
           </span>
@@ -92,7 +92,7 @@ export default function SinglePost() {
             onChange={(e) => setDesc(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{desc}</p>
+          <p className="singlePostDesc">{post.desc}</p>
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>

@@ -9,6 +9,6 @@ ReactDOM.render(
     </ContextProvider>
   </React.StrictMode>,
   document.getElementById("root"));
-const PORT = process.env.development || 3000;
-const HOST = "https://react-deloy.herokuapp.com/";
+// const PORT = process.env.development || 3000;
+// const HOST = "https://react-deloy.herokuapp.com/";
 

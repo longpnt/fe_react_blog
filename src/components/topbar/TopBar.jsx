@@ -1,11 +1,30 @@
 import "./topbar.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
+import {
+  Input, Col,
+  Row,
+} from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
+
 import { Context } from "../../context/Context";
+const { Search } = Input;
+
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1890ff',
+    }}
+  />
+);
+const { REACT_APP_API_URL } = process.env
+
 export default function TopBar() {
   const { user, dispatch } = useContext(Context);
-  const PF = process.env.URL_IMAGES;
+  const PF = `${REACT_APP_API_URL}/images`;
 
+  const onSearch = value => console.log(value);
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
   };
@@ -47,7 +66,7 @@ export default function TopBar() {
       <div className="topRight">
         {user ? (
           <Link to="/settings">
-            <img className="topImg" src={PF+ user.profile} alt="" />
+            <img className="topImg" src={PF + user.profile} alt="" />
           </Link>
         ) : (
           <ul className="topList">
@@ -63,7 +82,10 @@ export default function TopBar() {
             </li>
           </ul>
         )}
-        <i className="topSearchIcon fas fa-search"></i>
+          <Input.Group compact>
+            <Input.Search allowClear style={{ width: '40%' }} defaultValue="0571" />
+            <Input.Search allowClear style={{ width: '40%' }} defaultValue="26888888" />
+          </Input.Group>
       </div>
     </div>
   );
